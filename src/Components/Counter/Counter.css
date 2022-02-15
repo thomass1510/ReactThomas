@@ -1,0 +1,52 @@
+.container-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 15rem;
+    border: 2px solid black;
+    border-radius: 0.2rem;
+    padding: 0.5rem;
+    margin-left: 35rem;
+}
+
+.container-add-substract {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 150px;
+}
+
+.container-add-substract button {
+    background-color: transparent;
+    border: none;
+    border-radius: 100%;
+    cursor: pointer;
+    font-size: 17px;
+    width: 38px;
+    height: 38px;
+    transition: all 0.3s ease-in-out;
+}
+
+.container-add-substract button:hover {
+    background-color: aquamarine;
+}
+
+.add {
+    background-color: aquamarine;
+    color: black;
+    border: none;
+    border-radius: 7px;
+    padding: 5px;
+    font-size: 17px;
+}
+
+.disabled {
+    background-color: aquamarine;
+    color: black;
+    border: none;
+    border-radius: 7px;
+    padding: 5px;
+    font-size: 17px;
+    opacity: 0.3;
+    cursor: not-allowed;
+}

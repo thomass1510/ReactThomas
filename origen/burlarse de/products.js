@@ -5,7 +5,7 @@ export const products = [
         stock: 7,
         price: 1450,
         img: 'https://res.cloudinary.com/dwgee40td/image/upload/v1645052541/pokemonred_vhxxlt.jpg',
-        category: 'camisas',
+        category: 'gameboy',
     },
     {
         id: 2,
@@ -13,7 +13,7 @@ export const products = [
         stock: 2,
         price: 1450,
         img: 'https://res.cloudinary.com/dwgee40td/image/upload/v1645052608/PKMN_-_Blue_Sea_c3opim.png',
-        category: 'gorras',
+        category: 'gameboy advance',
     },
     {
         id: 3,
@@ -21,7 +21,7 @@ export const products = [
         stock: 9,
         price: 1300,
         img: 'https://res.cloudinary.com/dwgee40td/image/upload/v1645052668/sonic_q2hmlh.jpg',
-        category: 'remeras',
+        category: 'gameboy advance',
     }
 ];
 

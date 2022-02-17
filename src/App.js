@@ -10,7 +10,6 @@ function App() {
     <div className="App">
       <NavBar />
       <ItemListContainer greeting="Bienvenido a GameCase" />
-      <Counter stock={8} initial= {0} />
     </div>
   );
 }

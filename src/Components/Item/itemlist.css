@@ -1,0 +1,42 @@
+.Item {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    background-color: rgb(161, 145, 145);
+
+}
+
+.itemlist {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.Item{
+    margin: 2rem;
+    padding: 1.2rem;
+    border: 1px solid black;
+}
+
+.title{
+    margin: 0.5rem;
+    font-size: 1.2rem;
+    color: rgb(204, 235, 243);
+}
+
+.imgProd{
+    height: 12rem;
+    width: 12rem;
+    margin: 1rem;
+}
+
+p{
+    margin: 0.5rem;
+}
+
+.botonVerMas{
+    width: 3.6rem;
+    height: 1rem;
+    font-size: 0.6rem;
+    margin-top: 0.8rem;
+}

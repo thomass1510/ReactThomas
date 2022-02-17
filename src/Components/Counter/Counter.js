@@ -19,7 +19,7 @@ const Counter = ({stock, initial}) => {
 
     const addToCart = () =>{
 
-        console.log(`Se agregaron al carrito ${number} items`);
+        alert(`Se agregaron al carrito ${number} items`);
 
     };
 

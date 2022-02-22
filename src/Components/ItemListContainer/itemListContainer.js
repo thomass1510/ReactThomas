@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { traerProductos } from '../../mock/products';
+import { traerProductos } from '../mock/products';
 import ItemList from '../Item/ItemList';
 import './itemListContainer.css';
 

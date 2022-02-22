@@ -1,17 +1,12 @@
-import { products } from '../../mock/products';
-import Counter from '../Counter/Counter';
+import { products } from '../mock/products';
 import './itemlist.css'
 
-const Item = ({ img, name, price, stock}) => {
+const Item = ({ img, name}) => {
     return (
         <div className="Item">
-            <h1 className='title'>{name}</h1>
-            <img className='imgProd' src={img} alt={name} />
-            <p>$ {price}</p>
-            <Counter stock={stock} initial= {0}/>
-            <button className='botonVerMas'>Ver detalle...</button>
-        </div>
-        
+        <h1 className='title'>{name}</h1>
+        <img className='imgProd' src={img} alt={name} />
+    </div>
     );
 };
 

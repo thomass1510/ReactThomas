@@ -1,26 +1,27 @@
+import React from 'react';
 import { useEffect, useState } from 'react';
-import { traerProductos } from '../mock/products';
+import {getProducts } from '../mock/products';
 import ItemList from '../Item/ItemList';
 import './itemListContainer.css';
+import { useParams } from 'react-router-dom';
 
 const ItemListContainer = ({greeting})=>{
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    const { categoryId } = useParams();
     
     useEffect(() => {
-        traerProductos
-            .then((res) => {
-                setProducts(res);
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-            .finally(() => {
-                setLoading(false);
-            });
-    }, []);
-    
-    
+        getProducts().then(item => {
+            const productsToResolve = categoryId? item.filter(item => item.category === categoryId) : item;
+            setProducts(productsToResolve)
+        }).catch(err => {
+            console.log(err)
+        }).finally(() => {
+            setLoading(false)
+        })
+
+    }, [categoryId])
     
     return (
         <>

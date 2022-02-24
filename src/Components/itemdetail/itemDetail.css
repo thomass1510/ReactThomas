@@ -1,0 +1,14 @@
+.lorem{
+    display: flex;
+    align-items: center;
+    color: rgba(83, 50, 0, 0.781);
+}
+
+.text{
+    border: 0.4rem solid black;
+    padding: 0.5rem;
+}
+
+.container1{
+    display: flex;
+}

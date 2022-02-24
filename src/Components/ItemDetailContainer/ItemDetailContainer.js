@@ -1,16 +1,17 @@
 import React from 'react'
 import { useEffect, useState } from 'react';
 import { GetProduct } from '../mock/products';
-import ItemDetail from '../itemdetail/itemdetail';
+import ItemDetail from '../itemdetail/itemDetail';
+import { useParams } from 'react-router-dom';
 
 const ItemDetailContainer = ({greeting}) => {
 
     const [product, setProduct] = useState({});
     const [loading, setLoading] = useState(true);
+    const params = useParams()
 
     useEffect(() => {
-        GetProduct
-            .then((res) => {
+        GetProduct(params.productId).then((res) => {
                 setProduct(res);
             })
             .catch((error) => {
@@ -24,7 +25,7 @@ const ItemDetailContainer = ({greeting}) => {
     return(
         <div>
             <h2>{greeting}</h2>
-            <ItemDetail products = {product}/>
+            <ItemDetail product = {product}/>
         </div>
         
     )

@@ -20,15 +20,39 @@
     font-size: 30px;
     padding: 0 80px;
     font-weight: bold;
+    text-decoration: none;
 }
 
 .menuItems{
     display: flex;
-    list-style: none;
+    
     margin-right: 30px;
 }
 
 .menuItems li{
     border-radius: 3px;
     margin: 0 5px;
+}
+
+.ActiveOption{
+    color: black;
+    background-color: rgb(70, 69, 69);
+    display: flex;
+    margin: 2rem;
+    text-decoration: none;
+}
+
+.Option{
+    background-color: rgb(70, 69, 69);
+    color: rgb(255, 244, 244);
+    display: flex;
+    margin: 2rem;
+    text-decoration: none;
+}
+
+.Cart{
+    font-size: 2rem;
+    margin-right: 4rem;
+    text-decoration: none;
+    color: white;
 }

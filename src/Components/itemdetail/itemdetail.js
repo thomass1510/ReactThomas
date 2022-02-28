@@ -19,11 +19,11 @@ const ItemDetail = ({ product, quantity }) => {
                 <h2 className='title'>$ {product.price}</h2>
                 {count ? (
         <Link to="/cart">
-          <button className="item-button">Ver carrito</button>
+        <button className="container-button">Ver carrito</button>
         </Link>
-      ) : (
+    ) : (
         <Counter stock={product.stock} initial={1} addtoCart={addtoCart} />
-      )}   
+    )}   
             </div>
             <div className='lorem'>
                 <p className='text'>{product.description}</p>

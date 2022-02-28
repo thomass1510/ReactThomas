@@ -12,3 +12,15 @@
 .container1{
     display: flex;
 }
+
+.container-button {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    width: 9rem;
+    border: 1px solid black;
+    border-radius: 0.2rem;
+    padding: 0.7rem;
+    margin-left: 2rem;
+}

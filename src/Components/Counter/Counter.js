@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import './Counter.css'
 
 
-const Counter = ({stock, initial}) => {
+const Counter = ({stock, initial, addtoCart}) => {
     const [number, setNumber] = useState(1);
 
 
@@ -17,11 +17,6 @@ const Counter = ({stock, initial}) => {
     };
 
 
-    const addToCart = () =>{
-
-        alert(`Se agregaron al carrito ${number} items`);
-
-    };
 
     return(
         <div className= "container-button">
@@ -34,7 +29,7 @@ const Counter = ({stock, initial}) => {
                 <button
                     disabled={number === 0}
                     className={number === 0 ? 'disabled' : 'add'}
-                    onClick={addToCart}>
+                    onClick={() => addtoCart(number)}>
                         Agregar al carrito
                 </button>
             </div>

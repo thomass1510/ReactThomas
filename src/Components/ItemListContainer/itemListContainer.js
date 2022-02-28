@@ -11,17 +11,18 @@ const ItemListContainer = ({greeting})=>{
 
     const { categoryId } = useParams();
     
-    useEffect(() => {
-        getProducts().then(item => {
-            const productsToResolve = categoryId? item.filter(item => item.category === categoryId) : item;
-            setProducts(productsToResolve)
-        }).catch(err => {
-            console.log(err)
-        }).finally(() => {
-            setLoading(false)
+    useEffect(()=>{
+        getProducts(categoryId)
+        .then((res)=>{
+            setProducts(res);
         })
-
-    }, [categoryId])
+        .catch((error) => {
+            console.error(error);
+        })
+        .finally(() => {
+            setLoading(false);
+        });
+    }, [categoryId]);
     
     return (
         <>

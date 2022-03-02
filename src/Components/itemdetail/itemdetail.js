@@ -3,13 +3,17 @@ import Counter from "../Counter/Counter";
 import './itemDetail.css'
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { CartContext } from '../../context/CartContext';
 
 const ItemDetail = ({ product, quantity }) => {
     const [count, setCount] = useState(quantity);
+    const { ToCart } = useContext(CartContext);
 
     const addtoCart = (quantity) => {
     alert(`Se agregaron ${quantity} "${product.name}" al carrito!`);
     setCount(quantity);
+    ToCart(product, quantity);
     };
     return (
         <div className='container1'>

@@ -36,11 +36,51 @@ export const CartContextProvider = ({ children }) => {
         });
         setCart(newProducts);
     };
-
+    const removeItem = (products) => {
+        let newCart = cart.filter((p) => p.products.id !== products.products.id);
+        setCart(newCart);
+      };
+    
+      const clear = () => {
+        setCart([]);
+      };
+    
+      const removeQuantity = (products) => {
+        let newCart = cart.map((p) => {
+          if (p.products.id === products.products.id) {
+            p.quantity -= 1;
+            return p;
+          }
+          return p;
+        });
+        setCart(newCart);
+      };
+    
+      const getQuantityTotal = () => {
+        return cart.reduce((acc, purchase) => {
+          return acc + purchase.quantity;
+        }, 0);
+      };
+    
+      const getTotalPrice = () => {
+        return cart.reduce((acc, purchase) => {
+          return acc + purchase.products.price * purchase.quantity;
+        }, 0);
+      };
 
     return (
-        <CartContext.Provider value={{ cart, ToCart }}>
-            {children}
-        </CartContext.Provider>
+        <CartContextProvider
+        value={{
+            cart,
+            ToCart,
+            removeItem,
+            clear,
+            getTotalPrice,
+            getQuantityTotal,
+            removeQuantity
+        }}
+        >
+        {children}
+        </CartContextProvider>
     );
-};
+    }

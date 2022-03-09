@@ -49,6 +49,9 @@ export const CartContextProvider = ({ children }) => {
         let newCart = cart.map((p) => {
           if (p.id === products.id) {
             p.cantidad -= 1;
+            if(p.cantidad < 0){
+              setCart(newCart);
+            }
             return p;
           }
           return p;

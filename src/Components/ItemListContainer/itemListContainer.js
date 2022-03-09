@@ -1,9 +1,11 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import {getProducts } from '../mock/products';
+//import {getProducts } from '../mock/products';
 import ItemList from '../Item/ItemList';
 import './itemListContainer.css';
 import { useParams } from 'react-router-dom';
+import { getDocs, collection, query, where } from 'firebase/firestore';
+import { db } from '../../services/firebase/firebase';
 
 const ItemListContainer = ({greeting})=>{
     const [products, setProducts] = useState([]);
@@ -11,31 +13,47 @@ const ItemListContainer = ({greeting})=>{
 
     const { categoryId } = useParams();
     
-    useEffect(()=>{
-        getProducts(categoryId)
-        .then((res)=>{
-            setProducts(res);
+
+    useEffect(() =>{
+
+
+        const collectionRef = categoryId ?
+        query(collection(db, 'products'), where('category', '==', categoryId)):
+        collection(db, 'products')
+        
+
+
+        getDocs(collectionRef).then(response => {
+            const products = response.docs.map(doc => {
+                console.log(doc)
+                return{id : doc.id, ...doc.data() }
+            })
+            console.log(products)
+            setProducts(products)
+        }).finally(()=>{
+            setLoading(false)
         })
-        .catch((error) => {
-            console.error(error);
+
+        return (()=>{
+
+            setProducts()
         })
-        .finally(() => {
-            setLoading(false);
-        });
-    }, [categoryId]);
+    }, [categoryId])
     
     return (
         <>
-            {loading ? (
-                <h1>Cargando...</h1>
-            ) : (
-                <>
-                    <h1>{greeting}</h1>
-                    <ItemList products={products} />
-                </>
-            )}
+        <h1>{greeting}</h1>
+        {
+                loading ? 
+                    <h1>Cargando...</h1> :  
+                products.length ? 
+                    <ItemList products={products}/> : 
+                    <h1>No se encontraron productos!</h1>
+            }
+            
         </>
     );
+    
 };
 
 export default ItemListContainer;

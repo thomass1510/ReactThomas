@@ -1,7 +1,14 @@
 import './Navbar.css'
 import CartWidget from '../CartWidget/CartWidget'
 import { NavLink } from 'react-router-dom'
+import { useContext } from 'react'
+import { CartContext } from '../../context/CartContext'
+
+
 const NavBar = ()=>{
+    const {products} = useContext(CartContext)
+    
+    
     return (
     <nav className='menu'>
         <NavLink to= {`/`} className="logo">GameCase</NavLink>
@@ -32,7 +39,7 @@ const NavBar = ()=>{
         </NavLink>
         </ul>
         <NavLink to= {`/cart`} className="Cart">
-            <CartWidget />
+        <CartWidget />
         </NavLink>
     
     </nav>

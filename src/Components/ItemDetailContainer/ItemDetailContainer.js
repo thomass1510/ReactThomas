@@ -3,28 +3,35 @@ import { useEffect, useState } from 'react';
 import { GetProduct } from '../mock/products';
 import ItemDetail from '../itemdetail/itemDetail';
 import { useParams } from 'react-router-dom';
+import { getDoc, doc } from 'firebase/firestore';
+import { db } from '../../services/firebase/firebase';
 
-const ItemDetailContainer = ({greeting}) => {
+
+const ItemDetailContainer = ({}) => {
 
     const [product, setProduct] = useState({});
     const [loading, setLoading] = useState(true);
     const params = useParams()
 
     useEffect(() => {
-        GetProduct(params.productId).then((res) => {
-                setProduct(res);
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-            .finally(() => {
-                setLoading(false);
-            });
-    }, []);
+        setLoading(true)
+
+        const docRef = doc(db, 'products', params)
+
+        getDoc(docRef).then( response =>{
+            const product = {id: response.id, ...response.data()}
+            setProduct(product)
+        }).finally(()=>{
+            setLoading(false)
+        })
+
+
+
+    }, [params]);
 
     return(
         <div>
-            <h2>{greeting}</h2>
+            <h2>Hola</h2>
             <ItemDetail product = {product}/>
         </div>
         

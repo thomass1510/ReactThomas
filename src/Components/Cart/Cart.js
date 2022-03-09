@@ -10,7 +10,6 @@ const Cart = () => {
             {cart.map((prods) => (
                 <li key={prods.id}>
                 <h1 className='title'>{prods.name}</h1>
-                <img className='imgProd' src={prods.img} alt={prods.name} />
                 <h2 className='title'>$ {prods.price}</h2>
                 <h3>{prods.cantidad}</h3>
                 <button onClick={() => removeQuantity(prods)}>
@@ -20,7 +19,7 @@ const Cart = () => {
                 </li>
             ))}
             {cart.length > 0 && (
-                <p className="getTotalPrice">Total price: {getTotalPrice()} USD</p>
+                <p>Total price: {getTotalPrice()}</p>
               )}
         </>
     );

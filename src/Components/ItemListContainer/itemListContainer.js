@@ -36,7 +36,7 @@ const ItemListContainer = ({greeting})=>{
 
         return (()=>{
 
-            setProducts()
+            setProducts([])
         })
     }, [categoryId])
     
@@ -46,9 +46,7 @@ const ItemListContainer = ({greeting})=>{
         {
                 loading ? 
                     <h1>Cargando...</h1> :  
-                products.length ? 
-                    <ItemList products={products}/> : 
-                    <h1>No se encontraron productos!</h1>
+                    <ItemList products={products}/> 
             }
             
         </>

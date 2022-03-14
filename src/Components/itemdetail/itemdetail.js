@@ -9,8 +9,9 @@ const ItemDetail = ({ product, quantity }) => {
     const [count, setCount] = useState(quantity);
     const { ToCart } = useContext(CartContext);
 
+
     const addtoCart = (quantity) => {
-    alert(`Se agregaron ${quantity} "${product.name}" al carrito!`);
+    alert("Success");
     setCount(quantity);
     ToCart(product, quantity);
     };

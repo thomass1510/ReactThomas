@@ -18,7 +18,7 @@ export const CartContextProvider = ({ children }) => {
 
     //función que chequea si está en el carrito
     const isInCart = (id) => {
-        return cart.some((producto) => producto.id === id);
+        return cart.some((purcharse) => purcharse.id === id);
     };
 
     //función que agrega cantidad

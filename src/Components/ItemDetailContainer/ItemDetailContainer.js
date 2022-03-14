@@ -11,8 +11,10 @@ const ItemDetailContainer = () => {
 
     const [product, setProduct] = useState({});
     const [loading, setLoading] = useState(true);
+    const [showDetails, setShowDetails] = useState(false);
     const {productId} = useParams()
     console.log(productId)
+
 
     useEffect(() => {
         setLoading(true);
@@ -22,8 +24,12 @@ const ItemDetailContainer = () => {
         getDoc(docRef).then(response => {
             const product = {id: response.productId, ...response.data() };
             setProduct(product);
-            }).finally(() => {
+            }).catch((error) => {
+                alert('error',`Error buscando producto: ${error}`)
+            }) 
+            .finally(() => {
             setLoading(false);
+            setShowDetails(true);
             });
     }, [productId]);
 

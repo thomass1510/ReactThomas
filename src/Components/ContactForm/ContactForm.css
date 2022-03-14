@@ -1,0 +1,23 @@
+.ContactContainer {
+    width: 20%;
+    padding-top: 1rem;
+}
+
+.contactInf {
+    font-weight: bolder;
+    font-size: 1.2rem;
+    color: #047ec4;
+    padding-top: 0.4rem;
+    padding-bottom: 1.5rem;
+}
+
+.contactForm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.LabelContact {
+    font-weight: bolder;
+    padding-bottom: 1rem;
+}

@@ -1,15 +1,19 @@
-import { products } from '../mock/products';
-import './itemlist.css'
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
-const Item = ({ img, name , id}) => {
+
+export default function Item({ product }) {
     return (
         <div className="Item">
-        <h1 className='title'>{name}</h1>
-        <img className='imgProd' src={img} alt={name} />
-        <Link to= {`/detail/${id}` } className="botonDetail">Ver detalle...</Link>
-    </div>
-    );
-};
+            <p className="title">{product.name}</p>
+            <img className ="imgProd" src={product.img} alt={product.name} />
+            <div>
+                <p>{product.price} USD</p>
 
-export default Item;
+                <Link to={`/item/${product.id}`}>
+                    <button className="botonDetail">BUY</button>
+                </Link>
+            </div>
+        </div>
+    );
+}

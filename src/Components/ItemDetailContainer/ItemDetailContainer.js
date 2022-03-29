@@ -1,45 +1,46 @@
-import React from 'react'
-import { useEffect, useState } from 'react';
-//import { GetProduct } from '../mock/products';
-import ItemDetail from '../itemdetail/ItemDetail';
-import { useParams } from 'react-router-dom';
-import { getDoc, doc } from 'firebase/firestore';
-import { db } from '../../services/firebase/firebase';
-
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import ItemDetails from "../itemDetails/ItemDetails";
+import { getDoc, doc } from "firebase/firestore";
+import { firestoreDb } from "../../services/firebase/firebase";
+import { useNotificationServices } from '../../services/Notification/Notification'
 
 const ItemDetailContainer = () => {
-
-    const [product, setProduct] = useState({});
-    const [loading, setLoading] = useState(true);
+    const [product, setProduct] = useState([]);
     const [showDetails, setShowDetails] = useState(false);
-    const {productId} = useParams()
-    console.log(productId)
+    const [loading, setLoading] = useState(true);
 
+    const { id } = useParams();
+
+    const setNotification = useNotificationServices()
 
     useEffect(() => {
         setLoading(true);
-
-        const docRef = doc(db, 'products', productId)
-
-        getDoc(docRef).then(response => {
-            const product = {id: response.productId, ...response.data() };
+        getDoc(doc(firestoreDb, `products/${id}`))
+            .then((response) => {
+            const product = { id: response.id, ...response.data() };
             setProduct(product);
-            }).catch((error) => {
-                alert('error',`Error buscando producto: ${error}`)
+            })
+            .catch((error) => {
+                setNotification(`Error buscando producto: ${error}`)
             }) 
             .finally(() => {
             setLoading(false);
             setShowDetails(true);
             });
-    }, [productId]);
+    }, [id]);
 
-    return(
-        <div>
-            <h2>GameCase</h2>
-            <ItemDetail product = {product}/>
+    return (
+        <div className="itemDetailContainer">
+        {showDetails && <ItemDetails product={product} />}
+        {loading && 
+            <div className="d-flex justify-content-center">
+                <div className="spinner-border text-primary spinner" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </div>
+            </div>}
         </div>
-        
-    )
-    
-}
-export default ItemDetailContainer
+    );
+};
+
+export default ItemDetailContainer;

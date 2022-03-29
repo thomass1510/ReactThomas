@@ -1,8 +1,8 @@
-import { CartContext } from "../../context/CartContext";
+import CartContext from "../../context/CartContext";
 import React, { useContext, useState, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import './Cart.css';
-import Togglable from "../Togglable/Togglable.js";
+import Togglable from '../Togglable/Togglable'
 import ContactForm from "../ContactForm/ContactForm";
 import {
     writeBatch,
@@ -12,7 +12,8 @@ import {
     collection,
     Timestamp,
 } from "firebase/firestore";
-import { db } from "../../services/firebase/firebase";
+import { firestoreDb } from "../../services/firebase/firebase";
+import { useNotificationServices } from "../../services/Notification/Notification";
 
 
 export default function Cart() {
@@ -25,9 +26,11 @@ export default function Cart() {
     comment: "",
     });
 
-    const { cart, ToCart , removeQuantity, removeItem, getTotalPrice, getQuantityTotal, clear } = useContext(CartContext);
+    const { cart, removeItem, getTotalPrice, getQuantityTotal, clear } = useContext(CartContext);
 
     const contactFormRef = useRef();
+
+    const setNotification = useNotificationServices();
 
 
     const confirmOrder = () => {
@@ -46,24 +49,20 @@ export default function Cart() {
                 date: Timestamp.fromDate(new Date()),
             };
     
-            const batch = writeBatch(db);
+            const batch = writeBatch(firestoreDb);
             const outOfStock = [];
     
             const executeOrder = () => {
                 if (outOfStock.length === 0) {
-                    addDoc(collection(db, "orders"), objOrder)
+                    addDoc(collection(firestoreDb, "orders"), objOrder)
                     .then(({ id }) => {
                         batch.commit().then(() => {
                             clear();
                             alert(
-                                "success",
-                                `Thank you! Your purcharse ID is: ${id}`
+                                `Thank you! Your purcharse ID is: ${id}, No worries, you'll receive all the information by email`
                             );
                         setOrderFinished(true);
                         });
-                    })
-                    .catch((error) => {
-                        alert("error", error);
                     })
                     .finally(() => {
                         setProcessingOrder(false);
@@ -71,8 +70,7 @@ export default function Cart() {
                 } else {
                     outOfStock.forEach((prod) => {
                         alert(
-                            "error",
-                            `${prod} hasn't stock, please check tomorrow!`
+                            `Sorry!! We've no stock right now, please check tomorrow!`
                         );
                         removeItem(prod);
                     });
@@ -80,11 +78,11 @@ export default function Cart() {
             };
     
             objOrder.items.forEach((prod) => {
-                getDoc(doc(db, "products", prod.prods.id))
+                getDoc(doc(firestoreDb, "products", prod.item.id))
                     .then((response) => {
-                        if (response.data().stock >= prod.cantidad) {
-                            batch.update(doc(db, "products", response.id), {
-                                stock: response.data().stock - prod.cantidad,
+                        if (response.data().stock >= prod.quantity) {
+                            batch.update(doc(firestoreDb, "products", response.id), {
+                                stock: response.data().stock - prod.quantity,
                             });
                         } else {
                             outOfStock.push(response.data().album);
@@ -102,7 +100,6 @@ export default function Cart() {
             });
         } else {
             alert(
-                "error",
                 "Please complete the contact form to continue"
             );
         }
@@ -130,7 +127,7 @@ export default function Cart() {
         } else if (orderFinished === true) {
             return (
             <div>
-                <h2 className="cart-title">Thanks for your purcharse!</h2>
+                <h2 className="cart-title">Thanks for your purcharse! Hope see you soon!</h2>
                 <div className="containerPurchaseBtn">
                     <NavLink to="/"><button className="btnBackHome">Back Home</button></NavLink>
                 </div>
@@ -140,39 +137,42 @@ export default function Cart() {
 
 
     return (
-        <div>
-            <p>YOUR CART</p>
+        <div className="cartPage">
+            <p className='cart-title'>YOUR CART</p>
             <ul>
                 {cart.length <= 0 ? (
                 <>
-                <p>Your cart is empty</p>
-                <div>
-                    <NavLink to="/">
-                    <button>Back to Shop</button>
+                <p className="titleCartEmpty">Your cart is empty</p>
+                <div className="containerCartEmpty">
+                    <NavLink to="/products">
+                    <button className="btnBack">Back to Shop</button>
                     </NavLink>
                 </div>
                 </>
                 ) : (
-                    cart.map((prods) => (
-                                <div>
-                                    <li key={prods.id}>
-                                    <h1 className='title'>{prods.name}</h1>
-                                    {cart.length > 0 && <p>Cantidad: {getQuantityTotal()}</p>}
-                                    <h2 className='title'>$ {prods.price}</h2>
-                                    <button onClick={() => removeQuantity(prods)}>Remove 1 unit</button>
-                                    <button onClick={() => removeItem(prods)}>Remove</button>
+                    cart.map((item) => (
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-lg-12 col-xs-12">
+                                    <li className="cartItemsCheck" key={item.item.id}>
+                                    <p className="cartItem">{item.item.name}</p>
+                                    {cart.length > 0 && <p className="cartItem">Cantidad: {getQuantityTotal()}</p>}
+                                    <p className="cartItem">{item.item.price} USD</p>
+                                    <button className="btnRemove" onClick={() => removeItem(item)}>X</button>
                                     </li>
                                 </div>
+                            </div>
+                        </div>
                     ))
                     )}
             </ul>
             
-                {cart.length > 0 && <p>TOTAL: {getTotalPrice()} USD</p>}
-                <div>
-                    <button onClick={() => clear()}>
+                {cart.length > 0 && <p className="cartTotal">TOTAL: {getTotalPrice()} USD</p>}
+                <div className="containerTogg2">
+                    <button onClick={() => clear()} className="ButtonCancel">
                         Clear Cart
                     </button>
-                    <button onClick={() => confirmOrder()}>
+                    <button onClick={() => confirmOrder()} className="ButtonConfirm">
                         Buy now
                     </button>
                 </div>
